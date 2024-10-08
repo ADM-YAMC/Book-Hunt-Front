@@ -1,0 +1,93 @@
+<div class="flex items-center justify-center h-screen p-2">
+  <div
+    class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
+  >
+    <form [formGroup]="form" class="space-y-6" (ngSubmit)="onSubmit()">
+      <section class="flex items-center justify-center flex-col">
+        <img
+          class="h-20"
+          src="../../../assets/image/biblioteca.png"
+          alt="Book Hunt Logo"
+        />
+        <h5
+          class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-cyprus-950"
+        >
+          Book Hunt
+        </h5>
+      </section>
+      <div>
+        <label
+          for="email"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Correo</label
+        >
+        <input
+          type="email"
+          name="email"
+          id="email"
+          formControlName="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          placeholder="name@company.com"
+          required
+        />
+        <small class="text-red-600" *ngIf="isFieldInvalid('email')">
+          El correo es requerido...
+        </small>
+      </div>
+      <div>
+        <label
+          for="password"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Contraseña</label
+        >
+        <input
+          type="password"
+          name="password"
+          id="password"
+          formControlName="password"
+          placeholder="••••••••"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          required
+        />
+        <small class="text-red-600" *ngIf="isFieldInvalid('password')">
+          La contraseña es requerida...
+        </small>
+      </div>
+      <div class="flex items-start">
+        <div class="flex items-start">
+          <div class="flex items-center h-5">
+            <input
+              id="remember"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-cyprus-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-cyprus-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+              required
+            />
+          </div>
+          <label
+            for="remember"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Recordarme</label
+          >
+        </div>
+        <a
+          href="#"
+          class="ms-auto text-sm text-cyprus-700 hover:underline dark:text-cyprus-500"
+          >¿Olvidaste tu contraseña?</a
+        >
+      </div>
+      <button
+        type="submit"
+        class="w-full text-white bg-cyprus-700 hover:bg-cyprus-800 focus:ring-4 focus:outline-none focus:ring-cyprus-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-800"
+      >
+        Iniciar sesión
+      </button>
+      <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+        Not registered?
+        <a href="#" class="text-cyprus-700 hover:underline dark:text-cyprus-500"
+          >Create account</a
+        >
+      </div> -->
+    </form>
+  </div>
+</div>

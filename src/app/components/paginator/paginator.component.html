@@ -1,0 +1,63 @@
+<div class="flex justify-between items-center flex-wrap">
+  <div class="sm:w-full md:w-5/12 pl-0">
+    <div class="flex items-center mr-7">
+      <span class="text-gray-500 pr-2">
+        <i class="flaticon-marca-de-verificacion"></i>
+      </span>
+      <div
+        id="kt_datatable_info"
+        role="status"
+        aria-live="polite"
+        class="dataTables_info"
+      >
+        Mostrando
+        <span class="font-bold text-primary ml-1">{{
+          listedRecordsLength
+        }}</span>
+        - Total de registros
+        <span class="font-bold text-primary ml-1">{{
+          originalRecordsLength
+        }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-end items-center flex-wrap">
+    <div class="flex items-center py-3 mr-2">
+      <select
+        class="form-select text-primary font-bold mr-4 border-0 bg-light"
+        style="width: 75px"
+        (change)="chageRegisterPerPage($event.target)"
+        [(ngModel)]="registerPerPage"
+      >
+        <option value="1">1</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+      </select>
+      <span class="text-muted"
+        ><span class="v-desk">Mostrando</span> página {{ selectedPage }} de
+        {{ lastPage }}</span
+      >
+    </div>
+
+    <div class="flex flex-wrap py-2 mr-3">
+      <button
+        (click)="previousPageCaption()"
+        class="btn btn-sm btn-circle btn-primary mr-2 my-1 rounded-full bg-cyprus-900 text-white"
+        [disabled]="selectedPage === firstPage"
+      >
+        <i class="las la-angle-left"></i>
+      </button>
+
+      <button
+        (click)="nextPageCaption()"
+        class="btn btn-sm btn-circle btn-primary mr-2 my-1 rounded-full bg-cyprus-900 text-white"
+        [disabled]="selectedPage === lastPage || records.length == 0"
+      >
+        <i class="las la-angle-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
