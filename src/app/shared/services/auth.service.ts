@@ -24,7 +24,7 @@ export class AuthService {
         if (!result.thereIsError && result.successful) {
           this.alert(`¡Hola, ${result.singleData.name}!`, 'success');
           this.setLocalStorage(result.singleData);
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         } else {
           this.alert(`${result.message}`, 'error');
         }

@@ -9,11 +9,12 @@ import {
 } from '@angular/common/http';
 import { tokenInterceptor } from './shared/interceptors/token.interceptor';
 import { authInterceptor } from './shared/interceptors/auth.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
-    provideHttpClient(withInterceptors([authInterceptor, tokenInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, tokenInterceptor])), provideAnimationsAsync(),
   ],
 };

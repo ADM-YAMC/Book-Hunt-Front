@@ -14,4 +14,6 @@ export class NavbarComponent {
    *
    */
   constructor(public authService: AuthService) {}
+
+  // https://stackoverflow.com/questions/34323480/in-angular-how-do-you-determine-the-active-route
 }

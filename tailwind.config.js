@@ -1,8 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
+    './node_modules/preline/dist/*.js',
     "./src/**/*.{html,ts}",
-     "./node_modules/flowbite/**/*.js"
+     "./node_modules/flowbite/**/*.js",
+
   ],
   theme: {
     extend: {},
@@ -23,7 +25,8 @@ module.exports = {
     }
   },
   plugins: [
-    require('flowbite/plugin')
+    require('flowbite/plugin'),
+    require('preline/plugin'),
   ],
 }
 
