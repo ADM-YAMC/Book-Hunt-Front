@@ -7,67 +7,212 @@
     >
       Biblioteca
     </h5>
-    <div class="flex justify-between items-center top">
-      <button
-        type="button"
-        (click)="openAddBook(null, 1)"
-        class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-      >
-        Nuevo libro
-      </button>
-
-      <form class="flex items-center">
-        <label for="simple-search" class="sr-only">Search</label>
-        <div class="relative w-full">
-          <div
-            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-          >
-            <svg
-              class="w-4 h-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 18 20"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"
-              />
-            </svg>
-          </div>
-          <input
-            type="text"
-            id="simple-search"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Buscar por: nombre, categoría, autor..."
-            required
-          />
-        </div>
+    <div class="grid xl:grid-cols-2 gap-2 md:grid-cols-1 top">
+      <div class="flex items-center">
         <button
-          type="submit"
-          class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          type="button"
+          (click)="openAddBook(null, 1)"
+          class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
-          <svg
-            class="w-4 h-4"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-            />
-          </svg>
-          <span class="sr-only">Search</span>
+          Nuevo libro
         </button>
-      </form>
+      </div>
+
+      <div class="flex justify-end w-full gap-3">
+        <div class="">
+          <label
+            for="opcion"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Burcar por:</label
+          >
+          <select
+            id="opcion"
+            (change)="onChangeSelect($event.target)"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+          >
+            <option selected value="0">Seleccione una opción</option>
+            <option value="1">Código</option>
+            <option value="2">Título</option>
+            <option value="3">Descripción</option>
+            <option value="4">Fecha de publicación</option>
+            <option value="5">Autor</option>
+            <option value="6">Categoría</option>
+            <option value="7">Estado</option>
+          </select>
+        </div>
+        <div class="">
+          <div
+            *ngIf="
+              searchPlaceholderSelected === undefined ||
+              (searchPlaceholderSelected?.id !== 4 &&
+                searchPlaceholderSelected?.id !== 7)
+            "
+          >
+            <label
+              for="buscador"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Búscador</label
+            >
+            <div class="flex items-center">
+              <label for="simple-search" class="sr-only">Search</label>
+              <div class="relative w-full">
+                <div
+                  class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="{{
+                    searchPlaceholderSelected === undefined ||
+                    searchPlaceholderSelected?.id === 1
+                      ? 'number'
+                      : 'text'
+                  }}"
+                  id="simple-search"
+                  [(ngModel)]="buscarV"
+                  (keyup.enter)="buscar()"
+                  [disabled]="
+                    searchPlaceholderSelected === undefined ||
+                    searchPlaceholderSelected?.id === 0
+                  "
+                  class="w-72 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+                  placeholder="{{ placeholder }}"
+                  required
+                />
+              </div>
+              <button
+                type="button"
+                (click)="buscar()"
+                class="p-2.5 ms-2 text-sm font-medium text-white bg-cyprus-700 rounded-lg border border-cyprus-700 hover:bg-cyprus-800 focus:ring-4 focus:outline-none focus:ring-cyprus-300 dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-800"
+              >
+                <svg
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+                <span class="sr-only">Search</span>
+              </button>
+            </div>
+          </div>
+          <div class="flex" *ngIf="searchPlaceholderSelected?.id === 4">
+            <div class="w-full mx-auto mb-2 pr-3">
+              <label
+                for="dateInit"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Desde</label
+              >
+              <input
+                type="date"
+                id="dateInit"
+                [(ngModel)]="initDate"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+              />
+            </div>
+            <div class="w-full mx-auto mb-2">
+              <label
+                for="dateEnd"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Hasta</label
+              >
+              <input
+                type="date"
+                id="dateEnd"
+                [(ngModel)]="endDate"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+              />
+            </div>
+            <div class="flex items-end pb-3">
+              <button
+                type="button"
+                (click)="buscar()"
+                class="p-2.5 ms-2 text-sm font-medium text-white bg-cyprus-700 rounded-lg border border-cyprus-700 hover:bg-cyprus-800 focus:ring-4 focus:outline-none focus:ring-cyprus-300 dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-800"
+              >
+                <svg
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+                <span class="sr-only">Search</span>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="searchPlaceholderSelected?.id === 7" class="flex">
+            <div class="mb-2">
+              <label
+                for="estado"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Estados</label
+              >
+              <select
+                id="estado"
+                (change)="onChangeValueStatus($event.target)"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+              >
+                <option selected disabled value="">Seleccione un estado</option>
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+              </select>
+            </div>
+            <!-- <div class="flex items-end pb-3">
+              <button
+                type="submit"
+                class="p-2.5 ms-2 text-sm font-medium text-white bg-cyprus-700 rounded-lg border border-cyprus-700 hover:bg-cyprus-800 focus:ring-4 focus:outline-none focus:ring-cyprus-300 dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-800"
+              >
+                <svg
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+                <span class="sr-only">Search</span>
+              </button>
+            </div> -->
+          </div>
+        </div>
+      </div>
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
       <table
@@ -117,7 +262,7 @@
               <button
                 type="button"
                 title="Ver libro"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                class="text-white bg-cyprus-700 hover:bg-cyprus-800 focus:outline-none focus:ring-4 focus:ring-cyprus-300 font-medium rounded-full text-sm p-2.5 text-center me-2 mb-2 dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-800"
               >
                 <i class="las la-eye"></i>
               </button>
@@ -141,8 +286,8 @@
         </tbody>
       </table>
       <div
-        *ngIf="bookListOriginal.length === 0"
-        class="p-4 m-3 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+        *ngIf="bookListOriginal.length === 0 || bookListTemp.length === 0"
+        class="p-4 m-3 text-sm text-cyprus-800 rounded-lg bg-cyprus-50 dark:bg-gray-800 dark:text-cyprus-400"
         role="alert"
       >
         No hay información que mostrar...

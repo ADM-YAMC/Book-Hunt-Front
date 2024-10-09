@@ -7,12 +7,25 @@ import { AuthorComponent } from './pages/author/author.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { UsersComponent } from './pages/users/users.component';
 import { authGuard } from './Auth/auth.guard';
+import { ViewBookLayoutComponent } from './shared/layouts/view-book-layout/view-book-layout.component';
+import { BookHomeComponent } from './pages/book-home/book-home.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'book-home',
     pathMatch: 'full',
+  },
+  {
+    path: '',
+    component: ViewBookLayoutComponent,
+    children: [
+      {
+        path: 'book-home',
+        component: BookHomeComponent,
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
@@ -21,7 +34,6 @@ export const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
-        pathMatch: 'full',
       },
     ],
   },
@@ -54,5 +66,5 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'book-home', pathMatch: 'full' },
 ];

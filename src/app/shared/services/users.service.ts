@@ -15,4 +15,10 @@ export class UsersService {
   getAllUser(): Observable<IResponse<Users>> {
     return this.http.get<IResponse<Users>>(this.api);
   }
+  setUsers(Users: Users): Observable<IResponse<Users>> {
+    return this.http.post<IResponse<Users>>(this.api, Users);
+  }
+  putUsers(Users: Users): Observable<IResponse<Users>> {
+    return this.http.put<IResponse<Users>>(`${this.api}/${Users.id}`, Users);
+  }
 }

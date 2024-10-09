@@ -5,11 +5,12 @@ import { Category } from '../../shared/models/Category/category';
 import { CategoryService } from '../../shared/services/category.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CategorySettingsComponent } from './category-settings/category-settings.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [PaginatorComponent, CommonModule],
+  imports: [PaginatorComponent, CommonModule, FormsModule],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
 })
@@ -22,6 +23,16 @@ export class CategoryComponent implements OnInit {
     records: [],
     enable: false,
   };
+  buscarV: string = '';
+  statusValue!: number;
+  placeholder: string | undefined = 'Seleccione una opción para buscar...';
+  searchPlaceholder = [
+    { id: 0, buscar: 'Seleccione una opción para buscar...' },
+    { id: 1, buscar: 'Buscar por código...' },
+    { id: 2, buscar: 'Buscar por nombre...' },
+    { id: 3, buscar: 'Buscar por estado...' },
+  ];
+  searchPlaceholderSelected: any;
   /**
    *
    */
@@ -36,7 +47,39 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.getAllCategory();
   }
+  onChangeSelect(event: any) {
+    //console.log(event.value);
+    this.categoryListTemp = this.categoryListOriginal;
+    this.buscarV = '';
+    this.searchPlaceholderSelected = this.searchPlaceholder.find(
+      (x) => x.id == event.value
+    );
+    this.placeholder = this.searchPlaceholderSelected?.buscar;
+  }
+  buscar() {
+    const query = this.buscarV.trim().toLowerCase();
 
+    if (query && this.searchPlaceholderSelected?.id) {
+      const filterById: { [key: number]: (x: any) => boolean } = {
+        1: (x) => x.categoryId === parseInt(query),
+        2: (x) => x.name.toLowerCase().includes(query),
+      };
+
+      const filter = filterById[this.searchPlaceholderSelected.id];
+      this.categoryListTemp = filter
+        ? this.categoryListOriginal.filter(filter)
+        : this.categoryListOriginal;
+    } else {
+      this.categoryListTemp = this.categoryListOriginal;
+    }
+  }
+  onChangeValueStatus(event: any) {
+    if (this.searchPlaceholderSelected?.id === 3) {
+      this.categoryListTemp = this.categoryListOriginal.filter(
+        (x) => x.isActive === (event.value == 1)
+      );
+    }
+  }
   getAllCategory() {
     this.categoryService.getAllCategory().subscribe({
       next: (result) => {
