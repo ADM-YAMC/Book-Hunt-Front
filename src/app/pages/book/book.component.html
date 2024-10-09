@@ -10,7 +10,7 @@
     <div class="flex justify-between items-center top">
       <button
         type="button"
-        (click)="openAddBook()"
+        (click)="openAddBook(null, 1)"
         class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
       >
         Nuevo libro
@@ -98,8 +98,8 @@
             <td class="px-3 py-2">
               {{ item.publicationDate | date : "dd-MM-yyyy" }}
             </td>
-            <td class="px-3 py-2">{{ item.title }}</td>
-            <td class="px-3 py-2">{{ item.title }}</td>
+            <td class="px-3 py-2">{{ getNamesAuthor(item.authors) }}</td>
+            <td class="px-3 py-2">{{ getNamesCategory(item.categories) }}</td>
             <td class="px-3 py-2">
               <span
                 [ngClass]="{
@@ -116,25 +116,26 @@
             <td class="px-3 py-2 flex justify-center">
               <button
                 type="button"
-                title="Ver comprobantes"
+                title="Ver libro"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                <i class="las la-file-invoice-dollar"></i>
+                <i class="las la-eye"></i>
               </button>
               <button
                 type="button"
                 title="Editar"
+                (click)="openAddBook(item, 2)"
                 class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm p-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               >
                 <i class="las la-pen"></i>
               </button>
-              <button
+              <!-- <button
                 title="{{ item.isActive ? 'Inactivar' : 'Activar' }}"
                 type="button"
                 class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
               >
                 <i class="las la-ban"></i>
-              </button>
+              </button> -->
             </td>
           </tr>
         </tbody>

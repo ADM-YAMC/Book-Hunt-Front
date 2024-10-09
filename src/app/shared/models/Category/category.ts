@@ -4,5 +4,5 @@ export interface Category {
   categoryId: number;
   name: string;
   isActive: boolean;
-  books: BookDto[];
+  books?: BookDto[] | undefined;
 }

@@ -15,4 +15,13 @@ export class AuthorService {
   getAllAuthor(): Observable<IResponse<Author>> {
     return this.http.get<IResponse<Author>>(this.api);
   }
+  setAuthor(author: Author): Observable<IResponse<Author>> {
+    return this.http.post<IResponse<Author>>(this.api, author);
+  }
+  putAuthor(author: Author): Observable<IResponse<Author>> {
+    return this.http.put<IResponse<Author>>(
+      `${this.api}/${author.authorId}`,
+      author
+    );
+  }
 }

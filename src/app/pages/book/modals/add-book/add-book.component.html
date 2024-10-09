@@ -4,7 +4,7 @@
   <h5
     class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
   >
-    Nuevo libro
+    {{ data.window === 1 ? "Nuevo libro" : "Actualizar " + data.data.title }}
   </h5>
   <button
     (click)="dialogRef.close()"
@@ -20,7 +20,7 @@
 </div>
 <div style="overflow-y: auto !important" class="mat-dialog-content-custom">
   <div class="card-body-custom">
-    <form class="p-4">
+    <form [formGroup]="form" class="p-4">
       <div class="grid xl:grid-cols-2 gap-2 md:grid-cols-1">
         <div class="w-full mx-auto mb-2">
           <label
@@ -31,9 +31,13 @@
           <input
             type="text"
             id="title"
+            formControlName="title"
             placeholder="Coloca un título..."
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
           />
+          <small class="text-red-600" *ngIf="isFieldInvalid('title')">
+            El título es requerido...
+          </small>
         </div>
         <div class="w-full mx-auto mb-2">
           <label
@@ -44,8 +48,12 @@
           <input
             type="date"
             id="date"
+            formControlName="publicationDate"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
           />
+          <small class="text-red-600" *ngIf="isFieldInvalid('publicationDate')">
+            La fecha de publicación es requerida...
+          </small>
         </div>
         <div class="w-full mx-auto mb-2">
           <label
@@ -56,14 +64,16 @@
 
           <ng-multiselect-dropdown
             [placeholder]="'Selecciona una o varias categorías'"
-            [settings]="dropdownSettings('categoryId', 'name')"
+            [settings]="dropdownSettings('categoryId', 'name', 3)"
             [data]="categoryList"
-            [(ngModel)]="selectedItems"
+            formControlName="categoryIds"
             (onSelect)="onItemSelect($event)"
             (onSelectAll)="onSelectAll($event)"
           >
           </ng-multiselect-dropdown>
-
+          <small class="text-red-600" *ngIf="isFieldInvalid('categoryIds')">
+            Debes de escoger por lo menos una categoría...
+          </small>
           <!-- <input
             type="text"
             id="category"
@@ -78,13 +88,16 @@
           >
           <ng-multiselect-dropdown
             [placeholder]="'Selecciona uno o varios autores'"
-            [settings]="dropdownSettings('item_id', 'item_text')"
-            [data]="dropdownList"
-            [(ngModel)]="selectedItems"
+            [settings]="dropdownSettings('authorId', 'fullName', 2)"
+            [data]="authorList"
+            formControlName="authorIds"
             (onSelect)="onItemSelect($event)"
             (onSelectAll)="onSelectAll($event)"
           >
           </ng-multiselect-dropdown>
+          <small class="text-red-600" *ngIf="isFieldInvalid('categoryIds')">
+            Debes de escoger por lo menos un autor...
+          </small>
         </div>
       </div>
       <div class="w-full mx-auto">
@@ -96,9 +109,35 @@
         <textarea
           id="description"
           rows="4"
+          formControlName="description"
           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-cyprus-500 focus:border-cyprus-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
           placeholder="Escribe una descripción para el libro..."
         ></textarea>
+        <small class="text-red-600" *ngIf="isFieldInvalid('description')">
+          La descripción es requerida...
+        </small>
+      </div>
+      <div class="w-full mx-auto mb-2">
+        <label
+          for="date"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Estado</label
+        >
+        <label class="inline-flex items-center cursor-pointer">
+          <input
+            formControlName="isActive"
+            type="checkbox"
+            value=""
+            class="sr-only peer"
+          />
+          <div
+            class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cyprus-300 dark:peer-focus:ring-cyprus-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-cyprus-600"
+          ></div>
+          <span
+            class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >{{ form.get("isActive")?.value ? "Activo" : "Inactivo" }}</span
+          >
+        </label>
       </div>
     </form>
   </div>
@@ -117,6 +156,7 @@
   </button>
   <button
     type="button"
+    (click)="save()"
     class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
   >
     Guardar

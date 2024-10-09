@@ -15,4 +15,15 @@ export class CategoryService {
   getAllCategory(): Observable<IResponse<Category>> {
     return this.http.get<IResponse<Category>>(this.api);
   }
+
+  setCategory(category: Category): Observable<IResponse<Category>> {
+    category.books = undefined;
+    return this.http.post<IResponse<Category>>(this.api, category);
+  }
+  putCategory(category: Category): Observable<IResponse<Category>> {
+    return this.http.put<IResponse<Category>>(
+      `${this.api}/${category.categoryId}`,
+      category
+    );
+  }
 }

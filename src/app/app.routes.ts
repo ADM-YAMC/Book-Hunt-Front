@@ -5,6 +5,8 @@ import { LoginLayoutComponent } from './shared/layouts/login-layout/login-layout
 import { LoginComponent } from './Auth/login/login.component';
 import { AuthorComponent } from './pages/author/author.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { UsersComponent } from './pages/users/users.component';
+import { authGuard } from './Auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -26,18 +28,29 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'home',
         component: HomeComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'category',
         component: CategoryComponent,
+        canActivate: [authGuard],
+        data: { role: 'Administrador' },
       },
       {
         path: 'author',
         component: AuthorComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        canActivate: [authGuard],
+        data: { role: 'Administrador' },
       },
     ],
   },

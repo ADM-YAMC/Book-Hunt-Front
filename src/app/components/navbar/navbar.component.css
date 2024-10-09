@@ -1,0 +1,4 @@
+.active {
+  --tw-text-opacity: 1;
+  color: rgb(5 122 128 / var(--tw-text-opacity));
+}

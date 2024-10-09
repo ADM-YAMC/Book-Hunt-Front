@@ -1,1 +1,166 @@
-<p>category works!</p>
+<div class="relative h-auto">
+  <div class="absolute bg-cyprus-900 h-72 w-full rounded-b-lg"></div>
+  <div class="flex justify-center">
+    <div
+      class="absolute min-h-72 w-5/6 top-32 rounded-lg p-4 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <h5
+        class="mb-5 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        Categorías
+      </h5>
+      <div class="flex justify-between items-center top">
+        <button
+          type="button"
+          (click)="openCategorySettings(null, 1)"
+          class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Nueva categoría
+        </button>
+
+        <form class="flex items-center">
+          <label for="simple-search" class="sr-only">Search</label>
+          <div class="relative w-full">
+            <div
+              class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"
+                />
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="simple-search"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Buscar por: nombre, estado..."
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <svg
+              class="w-4 h-4"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+            <span class="sr-only">Search</span>
+          </button>
+        </form>
+      </div>
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
+        <table
+          class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+        >
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-3 py-3">Código</th>
+              <th scope="col" class="px-3 py-3">Nombre</th>
+              <th scope="col" class="px-3 py-3">Estado</th>
+              <th scope="col" class="px-3 py-3 text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of categoryPaginator"
+              class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+            >
+              <td class="px-3 py-2">{{ item.categoryId }}</td>
+              <td class="px-3 py-2">{{ item.name }}</td>
+              <td class="px-3 py-2">
+                <span
+                  [ngClass]="{
+                    'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300':
+                      !item.isActive,
+                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300':
+                      item.isActive
+                  }"
+                  class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-full"
+                >
+                  {{ item.isActive ? "Activo" : "Inactivo" }}
+                </span>
+              </td>
+              <td class="px-3 py-2 flex justify-center">
+                <button
+                  type="button"
+                  title="Ver categoría"
+                  (click)="openCategorySettings(item, 3)"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  <i class="las la-eye fa-1x"></i>
+                </button>
+                <button
+                  type="button"
+                  title="Editar"
+                  (click)="openCategorySettings(item, 2)"
+                  class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm p-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                >
+                  <i class="las la-pen"></i>
+                </button>
+                <!-- <button
+                  title="{{ item.isActive ? 'Inactivar' : 'Activar' }}"
+                  type="button"
+                  class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                >
+                  <i class="las la-ban"></i>
+                </button> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div
+          *ngIf="categoryListOriginal.length === 0"
+          class="p-4 m-3 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+          role="alert"
+        >
+          No hay información que mostrar...
+        </div>
+        <div>
+          <app-paginator
+            #paginator
+            [originalRecordsLength]="categoryListTemp!.length"
+            [listedRecordsLength]="categoryPaginator!.length"
+            [registerQuantity]="
+              filteredList.enable && filteredList.records.length > 0
+                ? filteredList.records!.length
+                : categoryListTemp.length
+            "
+            [records]="
+              filteredList.enable ? filteredList.records : categoryListTemp
+            "
+            (onChage)="getPaginatedRecords($event)"
+          ></app-paginator>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="absolute bg-cyprus-50 min-h-72 w-5/6 top-32 rounded-lg p-4">
+      <p></p>
+    </div> -->
+  </div>
+</div>

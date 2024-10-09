@@ -1,0 +1,95 @@
+<div
+  class="modal-header border-b border-gray-200 dark:border-gray-600 flex justify-between items-center p-4"
+>
+  <h5
+    class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+  >
+    {{
+      data.window === 3
+        ? "Categoria de " + data.data.name
+        : data.window === 2
+        ? "Actualizar categoría"
+        : "Nueva categoría"
+    }}
+  </h5>
+  <button
+    (click)="dialogRef.close()"
+    type="button"
+    class="close"
+    aria-label="Close"
+  >
+    <i
+      aria-hidden="true"
+      class="las la-times text-danger text-2xl font-bold"
+    ></i>
+  </button>
+</div>
+<div style="overflow-y: auto !important" class="mat-dialog-content-custom">
+  <div class="card-body-custom">
+    <form [formGroup]="form" class="p-4">
+      <div class="grid xl:grid-cols-1 gap-2 md:grid-cols-1">
+        <div class="w-full mx-auto mb-2">
+          <label
+            for="categoryName"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Nombre</label
+          >
+          <input
+            type="text"
+            id="categoryName"
+            formControlName="name"
+            placeholder="Coloca un nombre..."
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+          />
+          <small class="text-red-600" *ngIf="isFieldInvalid('name')">
+            El correo es requerido...
+          </small>
+        </div>
+        <div class="w-full mx-auto mb-2">
+          <label
+            for="date"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Estado</label
+          >
+          <label class="inline-flex items-center cursor-pointer">
+            <input
+              formControlName="isActive"
+              type="checkbox"
+              value=""
+              class="sr-only peer"
+            />
+            <div
+              class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cyprus-300 dark:peer-focus:ring-cyprus-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-cyprus-600"
+            ></div>
+            <span
+              class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >{{ form.get("isActive")?.value ? "Activa" : "Inactiva" }}</span
+            >
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  class="mat-dialog-actions flex items-center p-4 md:p-5 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600 d-flex justify-end"
+  align="end"
+>
+  <button
+    type="button"
+    (click)="dialogRef.close()"
+    class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+  >
+    Cancelar
+  </button>
+  @if (data.window !== 3 ) {
+  <button
+    type="button"
+    (click)="save()"
+    class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+  >
+    Guardar
+  </button>
+  }
+</div>

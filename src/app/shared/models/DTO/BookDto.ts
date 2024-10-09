@@ -19,3 +19,11 @@ export interface CategoryDto {
   name: string;
   isActive: boolean;
 }
+export interface BookSetDto {
+  title: string;
+  description: string;
+  publicationDate: string;
+  isActive: boolean;
+  authorIds: number[];
+  categoryIds: number[];
+}

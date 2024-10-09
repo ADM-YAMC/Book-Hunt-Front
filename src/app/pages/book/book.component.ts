@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { BookDto } from '../../shared/models/DTO/BookDto';
+import {
+  AuthorDto,
+  BookDto,
+  CategoryDto,
+} from '../../shared/models/DTO/BookDto';
 import { BookService } from '../../shared/services/book.service';
 import { CommonModule } from '@angular/common';
 import { AddBookComponent } from './modals/add-book/add-book.component';
@@ -36,8 +40,36 @@ export class BookComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBook();
   }
-  openAddBook() {
-    this.dialog.open(AddBookComponent, { width: '900px' });
+  openAddBook(data: BookDto | null, window: number) {
+    this.dialog
+      .open(AddBookComponent, {
+        width: '900px',
+        data: {
+          data,
+          window,
+        },
+      })
+      .afterClosed()
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.getAllBook();
+        }
+      });
+  }
+  getNamesCategory(category: CategoryDto[]): string {
+    const categoryNames: string[] = [];
+    category.forEach((category) => {
+      categoryNames.push(category.name);
+    });
+    return `${categoryNames.join(', ')}`;
+  }
+  getNamesAuthor(author: AuthorDto[]): string {
+    const authorNames: string[] = [];
+    author.forEach((author) => {
+      authorNames.push(author.name);
+    });
+
+    return `${authorNames.join(', ')}`;
   }
   getAllBook() {
     this.bookService.getAllBook().subscribe({
@@ -45,6 +77,7 @@ export class BookComponent implements OnInit {
         if (!result.thereIsError && result.successful) {
           this.bookListTemp = result.dataList.length > 0 ? result.dataList : [];
           this.bookListOriginal = result.dataList;
+          console.log(this.bookListOriginal);
         } else {
         }
       },
