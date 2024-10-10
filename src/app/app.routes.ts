@@ -9,6 +9,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { authGuard } from './Auth/auth.guard';
 import { ViewBookLayoutComponent } from './shared/layouts/view-book-layout/view-book-layout.component';
 import { BookHomeComponent } from './pages/book-home/book-home.component';
+import { ProfileComponent } from './Auth/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +57,11 @@ export const routes: Routes = [
       {
         path: 'author',
         component: AuthorComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'my-profile',
+        component: ProfileComponent,
         canActivate: [authGuard],
       },
       {

@@ -78,7 +78,40 @@ export class AuthService {
       .then((result) => {
         if (result.isConfirmed) {
           localStorage.removeItem('__user__');
+          //this.router.navigate(['/login']);
+          this.GoTo();
+        }
+      });
+  }
+
+  GoTo() {
+    // console.log(2);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton:
+          'text-white bg-cyprus-700 hover:bg-cyprus-800 focus:outline-none focus:ring-4 focus:ring-cyprus-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-800',
+        cancelButton:
+          'text-white bg-cyprus-700 hover:bg-cyprus-800 focus:outline-none focus:ring-4 focus:ring-cyprus-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-900',
+      },
+      buttonsStyling: true,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: '¿Dónde quieres ir?',
+        text: '¿Dónde quieres ir cuando salgas?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ir al login',
+        cancelButtonText: 'Ir a BookHunt',
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          //localStorage.removeItem('__user__');
           this.router.navigate(['/login']);
+        } else {
+          this.router.navigate(['/book-home']);
         }
       });
   }

@@ -1,1 +1,153 @@
-<p>book-home works!</p>
+<div class="relative h-auto">
+  <div class="absolute bg-cyprus-900 h-96 w-full rounded-b-lg"></div>
+  <div class="flex justify-center">
+    <div class="absolute flex flex-col items-center min-h-24 top-20 w-2/3">
+      <h1 class="text-4xl text-white font-bold text-center mb-3">BookHunt</h1>
+
+      <div class="lg:w-2/5">
+        <label
+          for="default-search"
+          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+          >Search</label
+        >
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="search"
+            (input)="searchbarInput($event)"
+            id="default-search"
+            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyprus-500 focus:border-cyprus-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+            placeholder="Busca un libro por nombre, categoría, autor, fecha..."
+          />
+          <button
+            type="button"
+            data-dropdown-toggle="dropdown-1"
+            class="text-white absolute end-2.5 bottom-2.5 {{
+              !DateFilterApplied
+                ? 'bg-cyprus-700 hover:bg-cyprus-800 focus:ring-4 focus:outline-none focus:ring-cyprus-300 font-medium rounded-full text-sm px-4 py-2 dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-800'
+                : 'bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm px-4 py-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800'
+            }}"
+          >
+            <i style="font-size: 20px" class="las la-calendar"></i>
+          </button>
+        </div>
+        <div
+          id="dropdown-1"
+          class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 p-4"
+        >
+          <label
+            *ngIf="DateFilterApplied"
+            (click)="removeFilterByDate()"
+            class="text-center text-red-600 cursor-pointer"
+            for=""
+            >Remover filtro</label
+          >
+          <div class="w-full mx-auto mb-2">
+            <label
+              for="date"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Desde</label
+            >
+            <input
+              type="date"
+              id="date"
+              [(ngModel)]="initDate"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+            />
+          </div>
+          <div class="w-full mx-auto mb-2">
+            <label
+              for="date-1"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Hasta</label
+            >
+            <input
+              type="date"
+              id="date-1"
+              [(ngModel)]="endDate"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyprus-500 focus:border-cyprus-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+            />
+          </div>
+          <button
+            type="button"
+            (click)="filterByDate()"
+            class="text-white bg-cyprus-700 hover:bg-cyprus-800 focus:outline-none focus:ring-4 focus:ring-cyprus-300 font-medium rounded-full w-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-cyprus-600 dark:hover:bg-cyprus-700 dark:focus:ring-cyprus-800"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+      <!-- <label class="cursor-pointer text-white" for="">Remover filtro</label> -->
+    </div>
+    <div
+      class="relative min-h-72 w-full sm:w-11/12 md:w-5/6 top-60 rounded-lg p-4 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div
+          (click)="openDetail(item)"
+          *ngFor="let item of filteredBooks"
+          class="flex flex-col h-72 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 overflow-hidden cursor-pointer"
+        >
+          <img
+            class="object-cover w-full h-64 md:h-auto md:w-48 md:rounded-none rounded-t-lg"
+            src="{{ item.urlImageBook }}"
+            alt="{{ item.title }}"
+          />
+          <div
+            class="flex flex-col justify-between p-4 leading-normal overflow-hidden"
+          >
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white truncate"
+            >
+              {{ item.title }}
+            </h5>
+            <span
+              class="bg-cyprus-100 text-cyprus-800 text-xs text-center w-24 font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-cyprus-900 dark:text-cyprus-300"
+              >{{ item.publicationDate }}</span
+            >
+            <p
+              class="font-normal text-sm text-gray-700 dark:text-gray-400 truncate"
+            >
+              {{ item.namesAuthors }}
+            </p>
+            <p
+              class="mb-2 text-sm font-normal text-gray-700 dark:text-gray-400 truncate"
+            >
+              {{ item.namesCategories }}
+            </p>
+            <p
+              class="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-3 w-full"
+            >
+              {{ item.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="filteredBooks.length === 0 && search"
+        class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+        role="alert"
+      >
+        No se encontró información...
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,13 @@
   <h5
     class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
   >
-    {{ data.window === 1 ? "Nuevo libro" : "Actualizar " + data.data.title }}
+    {{
+      data.window === 3
+        ? data.data.title
+        : data.window === 2
+        ? "Actualizar libro"
+        : "Nuevo libro"
+    }}
   </h5>
   <button
     (click)="dialogRef.close()"
@@ -61,8 +67,16 @@
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Categorías</label
           >
-
+          <ul
+            class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400"
+            *ngIf="data.window === 3"
+          >
+            <li *ngFor="let item of form.get('categoryIds')?.value">
+              {{ item.name }}
+            </li>
+          </ul>
           <ng-multiselect-dropdown
+            *ngIf="data.window !== 3"
             [placeholder]="'Selecciona una o varias categorías'"
             [settings]="dropdownSettings('categoryId', 'name', 3)"
             [data]="categoryList"
@@ -86,7 +100,16 @@
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Autores</label
           >
+          <ul
+            class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400"
+            *ngIf="data.window === 3"
+          >
+            <li *ngFor="let item of form.get('authorIds')?.value">
+              {{ item.fullName }}
+            </li>
+          </ul>
           <ng-multiselect-dropdown
+            *ngIf="data.window !== 3"
             [placeholder]="'Selecciona uno o varios autores'"
             [settings]="dropdownSettings('authorId', 'fullName', 2)"
             [data]="authorList"
@@ -115,6 +138,23 @@
         ></textarea>
         <small class="text-red-600" *ngIf="isFieldInvalid('description')">
           La descripción es requerida...
+        </small>
+      </div>
+      <div class="w-full mx-auto">
+        <label
+          for="portada"
+          class="block mb-2 text-sm font-medium mt-2 text-gray-900 dark:text-white"
+          >Portada</label
+        >
+        <textarea
+          id="portada"
+          rows="4"
+          formControlName="urlImageBook"
+          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-cyprus-500 focus:border-cyprus-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyprus-500 dark:focus:border-cyprus-500"
+          placeholder="Ingrese la url de la portada para el libro..."
+        ></textarea>
+        <small class="text-red-600" *ngIf="isFieldInvalid('urlImageBook')">
+          La portada es requerida...
         </small>
       </div>
       <div class="w-full mx-auto mb-2">
@@ -157,6 +197,7 @@
   <button
     type="button"
     (click)="save()"
+    *ngIf="data.window !== 3"
     class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
   >
     Guardar

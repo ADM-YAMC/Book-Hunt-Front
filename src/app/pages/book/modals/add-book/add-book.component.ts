@@ -36,7 +36,7 @@ export class AddBookComponent implements OnInit {
   //dropdownSettings!: IDropdownSettings;
   categoryList: Category[] = [];
   authorList: Author[] = [];
-  authorListTemp: any[] = [];
+  authorListTemp: Author[] = [];
   form!: FormGroup;
   private formSubmitAttempt!: boolean;
   constructor(
@@ -54,6 +54,7 @@ export class AddBookComponent implements OnInit {
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       publicationDate: ['', [Validators.required]],
+      urlImageBook: ['', [Validators.required]],
       isActive: ['', [Validators.required]],
       authorIds: ['', [Validators.required]],
       categoryIds: ['', [Validators.required]],
@@ -62,8 +63,8 @@ export class AddBookComponent implements OnInit {
   ngOnInit() {
     this.getAuthor();
     this.getCategory();
-    if (this.data.window === 2) {
-      console.log(this.data.data);
+    if (this.data.window !== 1) {
+      //console.log(this.data.data);
       const authors = this.data.data.authors.map((item: any) => {
         item.fullName = item.name;
         return item;
@@ -76,7 +77,15 @@ export class AddBookComponent implements OnInit {
         ),
         categoryIds: this.data.data.categories,
       });
-    } else {
+    }
+    if (this.data.window === 3) {
+      this.form.get('title')?.disable();
+      this.form.get('description')?.disable();
+      this.form.get('publicationDate')?.disable();
+      this.form.get('urlImageBook')?.disable();
+      this.form.get('isActive')?.disable();
+      // this.form.get('categoryIds')?.disable();
+      // this.form.get('categoryIds')?.disable();
     }
   }
   formatPublicationDate(dateString: string): string {
@@ -106,7 +115,7 @@ export class AddBookComponent implements OnInit {
             item.fullName = `${item.name} ${item.lastName}`;
             return item;
           });
-          console.log(this.authorListTemp);
+          //console.log(this.authorListTemp);
         }
       },
     });

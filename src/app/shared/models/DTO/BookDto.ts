@@ -3,7 +3,10 @@ export interface BookDto {
   title: string;
   description: string;
   publicationDate: string;
+  urlImageBook: string;
   isActive: boolean;
+  namesAuthors?: string;
+  namesCategories?: string;
   authors: AuthorDto[];
   categories: CategoryDto[];
 }
@@ -23,6 +26,7 @@ export interface BookSetDto {
   title: string;
   description: string;
   publicationDate: string;
+  urlImageBook: string;
   isActive: boolean;
   authorIds: number[];
   categoryIds: number[];

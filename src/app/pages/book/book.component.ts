@@ -93,7 +93,7 @@ export class BookComponent implements OnInit {
       (query && this.searchPlaceholderSelected?.id) ||
       this.searchPlaceholderSelected?.id === 4
     ) {
-      console.log(1);
+      //console.log(1);
       const filterById: { [key: number]: (x: any) => boolean } = {
         1: (x) => x.bookId === parseInt(query),
         2: (x) => x.title.toLowerCase() === query,
@@ -165,7 +165,7 @@ export class BookComponent implements OnInit {
             this.bookListTemp = newData;
           }
 
-          console.log(this.bookListOriginal);
+          //console.log(this.bookListOriginal);
         } else {
         }
       },
